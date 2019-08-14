@@ -1,0 +1,389 @@
+PROBLEM SET00 SOLUTIONS
+========================
+
+
+TABLE CREATION:
+================
+
+EMPLOYEE TABLE
+===============
+
+create table EMPLOYEE 
+(E_ID varchar(7) PRIMARY KEY,
+NAME varchar(20),
+DEP_ID varchar(3),
+SALARY int,
+MANAGER_ID varchar(7)
+);
+
+INSERT into EMPLOYEE values ('A114','MARTIN TREDEAU','D01',54497,'A120');
+INSERT into EMPLOYEE values ('A116','ROBIN WAYNE','D02',20196,'A187');
+INSERT into EMPLOYEE values ('A178', 'BRUCE WILLS', 'D03', 66861 ,'A298'); 
+INSERT into EMPLOYEE values ('A132', 'PAUL VINCENT', 'D01', 94791,'A120'); 
+INSERT into EMPLOYEE values ('A198', 'TOM HANKS', 'D02', 16879, 'A187'); 
+INSERT into EMPLOYEE values ('A120','TIM ARCHER','D01', 48834 ,'A298');
+INSERT into EMPLOYEE values ( 'A143' ,'BRAD MICHAEL' ,'D01', 24488 ,'A120'); 
+INSERT into EMPLOYEE values ('A187' ,'ADAM JUSTIN', 'D02', 80543 ,'A298'); 
+INSERT into EMPLOYEE values ('A121', 'STUART WILLIAM' ,'D02', 78629 ,'A187'); 
+INSERT into EMPLOYEE values ('A176' ,'EDWARD CANE', 'D01', 89176 ,'A120'); 
+INSERT into EMPLOYEE values ('A142', 'TARA CUMMINGS' ,'D04', 99475 ,'A187');
+INSERT into EMPLOYEE values ('A130' ,'VANESSA PARY', 'D04', 28565, 'A187'); 
+INSERT into EMPLOYEE values ('A128', 'ADAM WAYNE' ,'D05' ,94324 ,'A165'); 
+INSERT into EMPLOYEE values ('A129' ,'JOSEPH ANGELIN', 'D05', 44280 ,'A165'); 
+INSERT into EMPLOYEE values ('A165', 'NATASHA STEVENS', 'D05', 31377, 'A298'); 
+INSERT into EMPLOYEE values ('A111','JOHN HELLEN', 'D01',15380,'A120'); 
+INSERT into EMPLOYEE values ('A194', 'HAROLLD STEVENS','D02',32166,'A187'); 
+INSERT into EMPLOYEE values ('A133','STEVE MICHELOS','D02',61215,'A187'); 
+INSERT into EMPLOYEE values ('A156','NICK MARTIN','D03',50174,'A178'); 
+ 
+mysql> select * from EMPLOYEE;
++------+-----------------+--------+--------+------------+
+| E_ID | NAME            | DEP_ID | SALARY | MANAGER_ID |
++------+-----------------+--------+--------+------------+
+| A114 | MARTIN TREDEAU  | D01    |  54497 | A120       |
+| A116 | ROBIN WAYNE     | D02    |  20196 | A187       |
+| A178 | BRUCE WILLS     | D03    |  66861 | A298       |
+| A132 | PAUL VINCENT    | D01    |  94791 | A120       |
+| A198 | TOM HANKS       | D02    |  16879 | A187       |
+| A120 | TIM ARCHER      | D01    |  48834 | A298       |
+| A143 | BRAD MICHAEL    | D01    |  24488 | A120       |
+| A187 | ADAM JUSTIN     | D02    |  80543 | A298       |
+| A121 | STUART WILLIAM  | D02    |  78629 | A187       |
+| A176 | EDWARD CANE     | D01    |  89176 | A120       |
+| A142 | TARA CUMMINGS   | D04    |  99475 | A187       |
+| A130 | VANESSA PARY    | D04    |  28565 | A187       |
+| A128 | ADAM WAYNE      | D05    |  94324 | A165       |
+| A129 | JOSEPH ANGELIN  | D05    |  44280 | A165       |
+| A165 | NATASHA STEVENS | D05    |  31377 | A298       |
+| A111 | JOHN HELLEN     | D01    |  15380 | A120       |
+| A194 | HAROLLD STEVENS | D02    |  32166 | A187       |
+| A133 | STEVE MICHELOS  | D02    |  61215 | A187       |
+| A156 | NICK MARTIN     | D03    |  50174 | A178       |
++------+-----------------+--------+--------+------------+
+19 rows in set (0.00 sec)
+
+
+
+DEPT TABLE
+===========
+
+create table DEPT
+(DEP_ID varchar(3),
+DEP_NAME varchar(20),
+DEP_MANAGER varchar(20)
+);
+
+INSERT into DEPT values ('D01','HEALTH','TIM ARCHER');
+INSERT into DEPT values ('D02','COMMUNICATIONS','ADAM JUSTIN');
+INSERT into DEPT values ('D03','PRODUCT','BRUCE WILLS');
+INSERT into DEPT values ('D04','INSURANCE','ROBERT SWIFT');
+INSERT into DEPT values ('D05','FINANCE','NATASHA STEVENS');
+
+mysql> select * from DEPT;
++--------+----------------+-----------------+
+| DEP_ID | DEP_NAME       | DEP_MANAGER     |
++--------+----------------+-----------------+
+| D01    | HEALTH         | TIM ARCHER      |
+| D02    | COMMUNICATIONS | ADAM JUSTIN     |
+| D03    | PRODUCT        | BRUCE WILLS     |
+| D04    | INSURANCE      | ROBERT SWIFT    |
+| D05    | FINANCE        | NATASHA STEVENS |
++--------+----------------+-----------------+
+5 rows in set (0.00 sec)
+
+
+ALTER TABLE EMPLOYEE
+ADD CONSTRAINT PK_Employee PRIMARY KEY (E_ID);
+
+ALTER TABLE DEPT
+ADD CONSTRAINT PK_Dept PRIMARY KEY (DEP_ID);
+
+ALTER TABLE EMPLOYEE
+ADD CONSTRAINT fk_Employee FOREIGN KEY (DEP_ID) REFERENCES DEPT(DEP_ID);
+
+
+
+SOLUTIONS:
+============
+
+1)Select the Employee with the top three salaries
+
+mysql> select * from EMPLOYEE
+    -> order by SALARY DESC
+    -> limit 3;
+
++------+---------------+--------+--------+------------+
+| E_ID | NAME          | DEP_ID | SALARY | MANAGER_ID |
++------+---------------+--------+--------+------------+
+| A142 | TARA CUMMINGS | D04    |  99475 | A187       |
+| A132 | PAUL VINCENT  | D01    |  94791 | A120       |
+| A128 | ADAM WAYNE    | D05    |  94324 | A165       |
++------+---------------+--------+--------+------------+
+
+
+
+2)Select the Employee with the least salary
+
+mysql> SELECT * FROM EMPLOYEE
+    -> ORDER BY SALARY
+    -> LIMIT 1;
+
++------+-------------+--------+--------+------------+
+| E_ID | NAME        | DEP_ID | SALARY | MANAGER_ID |
++------+-------------+--------+--------+------------+
+| A111 | JOHN HELLEN | D01    |  15380 | A120       |
++------+-------------+--------+--------+------------+
+
+
+
+3)Select the Employee who does not have a manager in the department table
+
+mysql> SELECT  * from EMPLOYEE where MANAGER_ID not in
+    -> (select E_ID from EMPLOYEE e join DEPT d ON e.NAME= d.DEP_MANAGER);
+
++------+-----------------+--------+--------+------------+
+| E_ID | NAME            | DEP_ID | SALARY | MANAGER_ID |
++------+-----------------+--------+--------+------------+
+| A120 | TIM ARCHER      | D01    |  48834 | A298       |
+| A165 | NATASHA STEVENS | D05    |  31377 | A298       |
+| A178 | BRUCE WILLS     | D03    |  66861 | A298       |
+| A187 | ADAM JUSTIN     | D02    |  80543 | A298       |
++------+-----------------+--------+--------+------------+
+
+
+
+4)Select the Employee who is also a Manager
+
+
+mysql> SELECT  * from EMPLOYEE where E_ID  in
+    -> (select E_ID from EMPLOYEE e join DEPT d ON e.NAME= d.DEP_MANAGER);
+
++------+-----------------+--------+--------+------------+
+| E_ID | NAME            | DEP_ID | SALARY | MANAGER_ID |
++------+-----------------+--------+--------+------------+
+| A120 | TIM ARCHER      | D01    |  48834 | A298       |
+| A165 | NATASHA STEVENS | D05    |  31377 | A298       |
+| A178 | BRUCE WILLS     | D03    |  66861 | A298       |
+| A187 | ADAM JUSTIN     | D02    |  80543 | A298       |
++------+-----------------+--------+--------+------------+
+
+
+
+5)Select the Empolyee who is a Manager and has least salary
+
+
+mysql> SELECT * from EMPLOYEE where SALARY =(select min(SALARY) from EMPLOYEE where E_ID in (select distinct(MANAGER_ID) from EMPLOYEE));
+
++------+-----------------+--------+--------+------------+
+| E_ID | NAME            | DEP_ID | SALARY | MANAGER_ID |
++------+-----------------+--------+--------+------------+
+| A165 | NATASHA STEVENS | D05    |  31377 | A298       |
++------+-----------------+--------+--------+------------+
+
+
+
+6)Select the total number of Employees in Communications departments
+
+mysql> select d.DEP_NAME,count(*) AS NOOFEMP from EMPLOYEE e join DEPT d ON e.DEP_ID=d.DEP_ID where d.DEP_NAME='COMMUNICATIONS';
++----------------+---------+
+| DEP_NAME       | NOOFEMP |
++----------------+---------+
+| COMMUNICATIONS |       6 |
++----------------+---------+
+
+
+
+7)Select the Employee in Finance Department who has the top salary
+
+
+mysql> select NAME,max(SALARY) from EMPLOYEE where NAME in
+    -> (select NAME from EMPLOYEE e join DEPT d ON e.DEP_ID=d.DEP_ID where d.DEP_NAME='FINANCE');
+
++-------------+------------+
+| max(SALARY) | NAME       |
++-------------+------------+
+|       94324 | ADAM WAYNE |
++-------------+------------+
+
+
+
+8)Select the Employee in product depatment who has the least salary
+
+
+mysql> select min(SALARY),NAME from EMPLOYEE where NAME in
+    -> (select NAME from EMPLOYEE e join DEPT d ON e.DEP_ID=d.DEP_ID where d.DEP_NAME='PRODUCT');
+
++-------------+-------------+
+| min(SALARY) | NAME        |
++-------------+-------------+
+|       50174 | NICK MARTIN |
++-------------+-------------+
+
+
+
+9)Select the count of Empolyees in Health with maximum salary
+
+mysql> select DEP_ID,count(*) AS NOOFEMP from EMPLOYEE where SALARY in
+    ->  (select max(SALARY) from EMPLOYEE e join DEPT d ON e.DEP_ID=d.DEP_ID where d.DEP_NAME='HEALTH');
++--------+---------+
+| DEP_ID | NOOFEMP |
++--------+---------+
+| D01    |       1 |
++--------+---------+
+1 row in set (0.00 sec)
+
+
+10)Select the Employees who report to Natasha Stevens
+
+
+mysql> select emp.E_ID,emp.NAME from EMPLOYEE e join EMPLOYEE emp ON e.E_ID=emp.MANAGER_ID WHERE e.NAME='NATASHA STEVENS';
++------+----------------+
+| E_ID | NAME           |
++------+----------------+
+| A128 | ADAM WAYNE     |
+| A129 | JOSEPH ANGELIN |
++------+----------------+
+
+
+
+
+11)Display the Employee name,Employee count,Dep name,Dept manager in the Health department
+
+
+mysql> SELECT GROUP_CONCAT(e.NAME),count(*),d.DEP_NAME,d.DEP_MANAGER from EMPLOYEE e join DEPT d on e.DEP_ID=d.DEP_ID where d.DEP_NAME='HEALTH';
+
++-----------------------------------------------------------------------------+----------+----------+-------------+
+| GROUP_CONCAT(e.NAME)                                                        | count(*) | DEP_NAME | DEP_MANAGER |
++-----------------------------------------------------------------------------+----------+----------+-------------+
+| JOHN HELLEN,MARTIN TREDEAU,TIM ARCHER,PAUL VINCENT,BRAD MICHAEL,EDWARD CANE |        6 | HEALTH   | TIM ARCHER  |
++-----------------------------------------------------------------------------+----------+----------+-------------+
+
+
+
+
+12)Display the Department id,Employee ids and Manager ids for the Communications department
+
+mysql> select e.DEP_ID,e.E_ID,e.MANAGER_ID from EMPLOYEE e JOIN DEPT d on e.DEP_ID=d.DEP_ID where d.DEP_NAME='COMMUNICATIONS';
+
++--------+------+------------+
+| DEP_ID | E_ID | MANAGER_ID |
++--------+------+------------+
+| D02    | A116 | A187       |
+| D02    | A121 | A187       |
+| D02    | A133 | A187       |
+| D02    | A187 | A298       |
+| D02    | A194 | A187       |
+| D02    | A198 | A187       |
++--------+------+------------+
+
+
+
+13)Select the Average Expenses for Each dept with Dept id and Dept name
+
+
+mysql> select d.DEP_ID,d.DEP_NAME,AVG(SALARY) FROM EMPLOYEE e join DEPT d on e.DEP_ID=d.DEP_ID group by d.DEP_NAME;
++--------+----------------+-------------+
+| DEP_ID | DEP_NAME       | AVG(SALARY) |
++--------+----------------+-------------+
+| D01    | HEALTH         |  54527.6667 |
+| D02    | COMMUNICATIONS |  48271.3333 |
+| D03    | PRODUCT        |  58517.5000 |
+| D04    | INSURANCE      |  64020.0000 |
+| D05    | FINANCE        |  56660.3333 |
++--------+----------------+-------------+
+
+
+
+14)Select the total expense for the department finance
+
+
+mysql> select d.DEP_NAME,sum(SALARY) from EMPLOYEE e join DEPT d on e.DEP_ID=d.DEP_ID where d.DEP_NAME='FINANCE';
++----------+-------------+
+| DEP_NAME | sum(SALARY) |
++----------+-------------+
+| FINANCE  |      169981 |
++----------+-------------+
+
+
+
+15)Select the department which spends the least with Dept id and Dept manager name
+
+
+mysql> select d.DEP_NAME,e.DEP_ID,DEP_MANAGER from EMPLOYEE e join DEPT d on e.DEP_ID=d.DEP_ID group by e.DEP_ID having sum(SALARY)=(select sum(SALARY) from EMPLOYEE group by DEP_ID order by sum(SALARY) limit 1);
++----------+--------+-------------+
+| DEP_NAME | DEP_ID | DEP_MANAGER |
++----------+--------+-------------+
+| PRODUCT  | D03    | BRUCE WILLS |
++----------+--------+-------------+
+
+
+
+
+16)Select the count of Employees in each department
+
+mysql> SELECT d.DEP_NAME,COUNT(*) FROM EMPLOYEE e join DEPT d on e.DEP_ID=d.DEP_ID GROUP BY d.DEP_NAME;
++----------------+----------+
+| DEP_NAME       | COUNT(*) |
++----------------+----------+
+| HEALTH         |        6 |
+| COMMUNICATIONS |        6 |
+| PRODUCT        |        2 |
+| INSURANCE      |        2 |
+| FINANCE        |        3 |
++----------------+----------+
+
+
+
+17)Select the count of Employees in each department having salary <10000
+
+mysql> select DEP_ID,count(*) from EMPLOYEE WHERE SALARY<10000 GROUP BY DEP_ID;
+Empty set (0.00 sec)
+
+mysql> select DEP_ID,count(*) from EMPLOYEE WHERE SALARY<30000 GROUP BY DEP_ID;
++--------+----------+
+| DEP_ID | count(*) |
++--------+----------+
+| D01    |        2 |
+| D02    |        2 |
+| D04    |        1 |
++--------+----------+
+
+
+
+18)Select the total number of Employees in Dept id D04
+
+
+mysql> select DEP_ID,count(*) from EMPLOYEE WHERE DEP_ID='D04';
++--------+----------+
+| DEP_ID | count(*) |
++--------+----------+
+| D04    |        2 |
++--------+----------+
+
+
+19)Select all department details of the Department with Maximum Employees
+
+mysql> select max(NOOFEMP),DEP_NAME,DEP_ID,DEP_MANAGER FROM (SELECT COUNT(*) AS NOOFEMP,d.DEP_NAME,d.DEP_ID,d.DEP_MANAGER FROM EMPLOYEE e join DEPT d on e.DEP_ID=d.DEP_ID GROUP BY d.DEP_ID) A;
++--------------+----------+--------+-------------+
+| max(NOOFEMP) | DEP_NAME | DEP_ID | DEP_MANAGER |
++--------------+----------+--------+-------------+
+|            6 | HEALTH   | D01    | TIM ARCHER  |
++--------------+----------+--------+-------------+
+
+20)Select the Employees who has Tim Cook as their manager
+
+
+mysql> SELECT NAME FROM EMPLOYEE e join DEPT d on e.DEP_ID=d.DEP_ID WHERE DEP_MANAGER='TIM COOK';
+Empty set (0.00 sec)
+
+mysql> SELECT NAME FROM EMPLOYEE e join DEPT d on e.DEP_ID=d.DEP_ID WHERE DEP_MANAGER='TIM ARCHER';
++----------------+
+| NAME           |
++----------------+
+| JOHN HELLEN    |
+| MARTIN TREDEAU |
+| TIM ARCHER     |
+| PAUL VINCENT   |
+| BRAD MICHAEL   |
+| EDWARD CANE    |
++----------------+
